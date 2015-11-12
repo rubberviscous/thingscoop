@@ -74,8 +74,10 @@ def main(args):
     recreate_index = args['--recreate-index'] or False
     gpu_mode = args['--gpu-mode'] or False
 
-    download_model(model_name)
-    model = read_model(model_name)
+    #download_model(model_name)
+    model_name = 'googlenet_places'
+    model =read_model(model_name)
+    #model = Model('mymodel','/home/beniz/projects/deepdetect/models/')
     classifier = ImageClassifier(model, gpu_mode=gpu_mode, confidence_threshold=min_confidence)
                                  
     if args['preview']:
@@ -109,6 +111,8 @@ def main(args):
         recreate_index=recreate_index
     )
 
+    #print 'matching_time_regions=',matching_time_regions
+    
     if not matching_time_regions:
         return 0
 

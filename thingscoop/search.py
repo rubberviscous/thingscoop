@@ -13,7 +13,7 @@ from .utils import read_index_from_path
 from .utils import save_index_to_path
 
 def label_frame(filename, classifier):
-    return map(lambda (l, c): l, classifier.classify_image(filename))
+    return map(lambda (l, c): l, classifier.classify_image_dd(filename))
 
 def label_video(filename, classifier, sample_rate=1, recreate_index=False):
     index_filename = generate_index_path(filename, classifier.model)
@@ -33,7 +33,7 @@ def label_video(filename, classifier, sample_rate=1, recreate_index=False):
         labels = label_frame(frame, classifier)
         if not len(labels):
             continue
-        t = (1./sample_rate) * index
+        t = float((1./sample_rate) * index)
         timed_labels.append((t, labels))
     
     shutil.rmtree(temp_frame_dir)
@@ -53,10 +53,11 @@ def search_video(filename, query, classifier, sample_rate=1, recreate_index=Fals
     range_start = None
     range_end = False
 
+    #print timed_labels
     ret = []
     for t, labels in timed_labels:
         success = eval_query_with_labels(query, labels)
-        
+                
         if not inside_range and success:
             range_start = t
             range_end = t

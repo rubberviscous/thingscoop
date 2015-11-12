@@ -23,18 +23,22 @@ def read_index_from_path(filename):
     ret = []
     for line in lines:
         parts = line.strip().split(' ')
-        t = float(parts[0])
-        if not parts[1:]: continue
+        #print parts[0].strip()
+        t = float(parts[0].strip())
+        #if not parts[1:]: continue
         labels = ' '.join(parts[1:]).split(',')
         ret.append((t, labels))
     return ret
 
 def save_index_to_path(filename, timed_labels):
     lines = []
+    f = open(filename,'w')
+    #print 'timed_labels=',timed_labels
     for t, labels in timed_labels:
-        lines.append("%f %s\n" % (t, ",".join(labels)))
-    open(filename, 'wb').writelines(lines)
-
+        lines.append("%s %s\n" % (str(t), ",".join(labels)))
+    f.writelines(lines)
+    f.close()
+    
 def create_supercut(regions):
     subclips = []
     filenames = set(map(lambda (filename, _): filename, regions))
@@ -47,6 +51,7 @@ def create_supercut(regions):
 
 def search_labels(r, labels):
     r = re.compile(r)
+    #print 'labels=',labels
     for label in labels:
         if not r.search(label):
             continue

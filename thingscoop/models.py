@@ -7,7 +7,7 @@ import urlparse
 import yaml
 import zipfile
 import urllib
-from pattern.en import wordnet
+#from pattern.en import wordnet
 from progressbar import ProgressBar, Percentage, Bar, ETA, FileTransferSpeed
 
 from .utils import get_hypernyms
@@ -107,9 +107,10 @@ def clear_models():
         remove_model(model)
 
 def read_model(model_name):
-    if not model_in_cache(model_name):
-        raise CouldNotFindModel, "Could not find model {}".format(model_name)
-    return Model(model_name, get_model_local_path(model_name))
+    #if not model_in_cache(model_name):
+    #    raise CouldNotFindModel, "Could not find model {}".format(model_name)
+    return Model(model_name,'/home/beniz/projects/deepdetect/models/googlenet_places/')
+                 #get_model_local_path(model_name))
 
 def get_downloaded_models():
     return map(os.path.basename, glob.glob(os.path.join(get_models_path(), "*")))
