@@ -45,11 +45,26 @@ def generate_index_path(filename, model):
     return "{name}_{model_name}.json".format(name=name, model_name=model.name)
 
 def read_index_from_path(filename):
-    return json.load(open(filename))
+    lines = open(filename).readlines()
+    ret = []
+    for line in lines:
+        parts = line.strip().split(' ')
+        #print parts[0].strip()
+        t = float(parts[0].strip())
+        #if not parts[1:]: continue
+        labels = ' '.join(parts[1:]).split(',')
+        ret.append((t, labels))
+    return ret
 
 def save_index_to_path(filename, timed_labels):
-    json.dump(timed_labels, open(filename, 'w'), indent=4)
-
+    lines = []
+    f = open(filename,'w')
+    #print 'timed_labels=',timed_labels
+    for t, labels in timed_labels:
+        lines.append("%s %s\n" % (str(t), ",".join(labels)))
+    f.writelines(lines)
+    f.close()
+    
 def create_supercut(regions):
     subclips = []
     filenames = set(map(lambda (filename, _): filename, regions))
@@ -80,6 +95,7 @@ def create_compilation(filename, index):
 
 def search_labels(r, labels):
     r = re.compile(r)
+    #print 'labels=',labels
     for label in labels:
         if not r.search(label):
             continue

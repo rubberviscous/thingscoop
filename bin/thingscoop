@@ -42,10 +42,10 @@ import os
 from docopt import docopt
                 
 if __name__ == '__main__':
-    if 'CAFFE_ROOT' not in os.environ:
-        print "You need to set your CAFFE_ROOT environment variable to point to your Caffe directory"
-        sys.exit(1)
-    sys.path.append(os.path.join(os.environ['CAFFE_ROOT'], 'python'))
+    #if 'CAFFE_ROOT' not in os.environ:
+    #    print "You need to set your CAFFE_ROOT environment variable to point to your Caffe directory"
+    #    sys.exit(1)
+    sys.path.append(os.path.join('python','/home/beniz/projects/deepdetect/apps/thingscoop'))
     os.environ['GLOG_minloglevel'] = '3'
     import thingscoop
     args = docopt(__doc__, version="Thingscoop 0.1")
