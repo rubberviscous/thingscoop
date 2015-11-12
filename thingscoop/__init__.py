@@ -89,7 +89,6 @@ def main(args):
     else:
         ignore_list = []
 
-    model_name = 'googlenet_places'
     model =read_model(model_name,model_dir)
     classifier = ImageClassifier(model, gpu_mode=gpu_mode)
                                  

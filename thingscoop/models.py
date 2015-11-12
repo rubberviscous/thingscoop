@@ -110,7 +110,7 @@ def read_model(model_name,model_dir):
     #if not model_in_cache(model_name):
     #    raise CouldNotFindModel, "Could not find model {}".format(model_name)
     print 'model_name=',model_name
-    return Model(model_name,model_dir+'/'+model_name)#'/home/beniz/projects/deepdetect/models/googlenet_places/')
+    return Model(model_name,model_dir+'/'+model_name)
                  #get_model_local_path(model_name))
 
 def get_downloaded_models():

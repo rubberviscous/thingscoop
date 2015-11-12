@@ -38,10 +38,12 @@ class ImageClassifier(object):
         self.mllib = 'caffe'
         self.dd = DD(self.host)
         self.dd.set_return_format(self.dd.RETURN_PYTHON)
-        dd_model = {'repository':'/home/beniz/projects/deepdetect/models/googlenet_places'}
+        dd_model = {'repository':model.model_dir}
+        print 'dd_model=',dd_model
         parameters_input = {'connector':'image'}
-        parameters_mllib = {'nclasses':205} #TODO: from yaml file in model object
+        parameters_mllib = {'nclasses':int(model.info['classes'])}#1000} #TODO: from yaml file in model object
         parameters_output = {}
+        self.dd.delete_service(self.sname)
         self.dd.put_service(self.sname,dd_model,description,self.mllib,
                             parameters_input,parameters_mllib,parameters_output)
         
