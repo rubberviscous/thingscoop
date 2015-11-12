@@ -71,6 +71,9 @@ def filter_out_labels(timed_labels, ignore_list):
             ret.append((t, filtered))
     return ret
 
+def label_frame(filename, classifier):
+    return map(lambda (l, c): l, classifier.classify_image_dd(filename))
+
 def label_video(filename, classifier, sample_rate=1, recreate_index=False):
     index_filename = generate_index_path(filename, classifier.model)
     
@@ -89,7 +92,7 @@ def label_video(filename, classifier, sample_rate=1, recreate_index=False):
         labels = classifier.classify_image(frame)
         if not len(labels):
             continue
-        t = (1./sample_rate) * index
+        t = float((1./sample_rate) * index)
         timed_labels.append((t, labels))
     
     shutil.rmtree(temp_frame_dir)
@@ -111,11 +114,23 @@ def label_videos(filenames, classifier, sample_rate=1, recreate_index=False):
 def search_labels(timed_labels, query, classifier, sample_rate=1, recreate_index=False, min_confidence=0.3):
     timed_labels = threshold_labels(timed_labels, min_confidence)
 
-    times = []
-    for t, labels_list in timed_labels:
-        raw_labels = map(lambda (l, c): l, labels_list)
-        if eval_query_with_labels(query, raw_labels):
-            times.append(t)
+    #print timed_labels
+    ret = []
+    for t, labels in timed_labels:
+        success = eval_query_with_labels(query, labels)
+                
+        if not inside_range and success:
+            range_start = t
+            range_end = t
+            inside_range = True
+                
+        elif inside_range and not success:
+            range_end = t
+            inside_range = False
+            ret.append((range_start, range_end))
+    
+    if inside_range:
+        ret.append((range_start, range_end))
 
     return times_to_regions(times)
 

@@ -6,7 +6,7 @@ import random
 import re
 import subprocess
 import sys
-import caffe
+#import caffe
 import tempfile
 
 def duration_string_to_timedelta(s):
@@ -64,7 +64,52 @@ def preview(filename, classifier):
 
             if current_pos != previous_time_in_seconds:
                 previous_time_in_seconds = current_pos
-                classification_result = classifier.classify_image(tmp.name)
+                classification_result = classifier.classify_image_dd(tmp.name)
+            
+            if classification_result:
+                add_text_to_frame(frame, format_classification(classification_result))
+
+            cv2.imshow('video', frame)
+        
+        cv2.setTrackbarPos(trackbar_prompt, 'video', current_pos)
+    
+        k = cv2.waitKey(1) & 0xFF
+        if k == 27:
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+def preview_dd(filename, classifier):
+    cv2.namedWindow('video')
+
+    duration = int(get_video_duration(filename))
+
+    def trackbar_change(t):
+        cap.set(cv2.cv.CV_CAP_PROP_POS_MSEC, t*1000)
+
+    trackbar_prompt = 'Current position:'
+    cv2.createTrackbar(trackbar_prompt, 'video', 0, duration, trackbar_change)
+
+    cap = cv2.VideoCapture(filename)
+
+    classification_result = None
+    previous_time_in_seconds = None
+    current_pos = 0
+
+    tmp = tempfile.NamedTemporaryFile(suffix=".png")    
+    
+    while cap.isOpened():
+        ret, frame = cap.read()
+
+        cv2.imwrite(tmp.name, frame)
+
+        if ret:
+            current_pos = get_current_position(cap)
+
+            if current_pos != previous_time_in_seconds:
+                previous_time_in_seconds = current_pos
+                classification_result = classifier.classify_image_dd(tmp.name)
             
             if classification_result:
                 add_text_to_frame(frame, format_classification(classification_result))
