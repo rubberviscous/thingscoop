@@ -8,7 +8,7 @@ Usage:
   thingscoop describe <file> [-n <words>] [-m <model>] [--recreate-index] [--gpu-mode] [-c <mc>]
   thingscoop index <files> [-m <model>] [-s <sr>] [-c <mc>] [-r <ocr>] [--recreate-index] [--gpu-mode] 
   thingscoop sort <file> [-m <model>] [--gpu-mode] [--min-confidence <ct>] [--max-section-length <ms>] [-i <ignore>] [--open]
-  thingscoop preview <file> [-m <model>] [--gpu-mode] [--min-confidence <ct>]
+  thingscoop preview <file> [-m <model>] [-d <dir>] [--gpu-mode] [--min-confidence <ct>]
   thingscoop labels list [-m <model>]
   thingscoop labels search <regexp> [-m <model>]
   thingscoop models list
@@ -27,6 +27,7 @@ Options:
   -s --sample-rate <sr>           How many frames to classify per second (default = 1)
   -c --min-confidence <mc>        Minimum prediction confidence required to consider a label (default depends on model)
   -m --model <model>              Model to use (use 'thingscoop models list' to see all available models)
+  -d --model-dir <directory>      Model directory for deepdetect
   -n --number-of-words <words>    Number of words to describe the video with (default = 5)
   -t --max-section-length <ms>    Max number of seconds to show examples of a label in the sorted video (default = 5)
   -r --min-occurrences <ocr>      Minimum number of occurrences of a label in video required for it to be shown in the sorted video (default = 2)

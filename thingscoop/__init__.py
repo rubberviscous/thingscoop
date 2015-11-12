@@ -35,6 +35,8 @@ from .utils import search_labels
 
 def main(args):
     model_name = args['--model'] or args['<model>'] or get_active_model()
+    model_dir = args['--model-dir'] or args['<dir>']
+    print 'model_dir=',model_dir
     
     if args['models']:
         if args['list']:
@@ -66,7 +68,7 @@ def main(args):
 
     if args['labels']:
         download_model(model_name)
-        model = read_model(model_name)
+        model = read_model(model_name,model_dir)
         labels = sorted(set(model.labels(with_hypernyms=True)), key=lambda l: l.lower())
         if args['list']:
             pydoc.pager('\n'.join(labels))
@@ -88,7 +90,7 @@ def main(args):
         ignore_list = []
 
     model_name = 'googlenet_places'
-    model =read_model(model_name)
+    model =read_model(model_name,model_dir)
     classifier = ImageClassifier(model, gpu_mode=gpu_mode)
                                  
     if args['preview']:
