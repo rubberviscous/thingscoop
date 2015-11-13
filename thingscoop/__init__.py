@@ -113,8 +113,8 @@ def main(args):
         sorted_labels = sorted(freq_dist.iteritems(), key=itemgetter(1), reverse=True)
         print '\n'.join(map(lambda (k, v): "{0} {1}".format(k, v), sorted_labels))
     
-    if not matching_time_regions:
-        return 0
+    #if not matching_time_regions:
+    #    return 0
 
     if args['search'] or args['filter']:
         query = args['<query>']

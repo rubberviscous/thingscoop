@@ -76,6 +76,7 @@ def label_frame(filename, classifier):
 
 def label_video(filename, classifier, sample_rate=1, recreate_index=False):
     index_filename = generate_index_path(filename, classifier.model)
+    print 'index_filename=',index_filename
     
     if os.path.exists(index_filename) and not recreate_index:
         return read_index_from_path(index_filename)

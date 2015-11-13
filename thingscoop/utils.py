@@ -61,7 +61,10 @@ def save_index_to_path(filename, timed_labels):
     f = open(filename,'w')
     #print 'timed_labels=',timed_labels
     for t, labels in timed_labels:
-        lines.append("%s %s\n" % (str(t), ",".join(labels)))
+        strlabels = []
+        for l in labels:
+            strlabels.append(l[0])
+        lines.append("%s %s\n" % (str(t), ",".join(strlabels)))
     f.writelines(lines)
     f.close()
     
