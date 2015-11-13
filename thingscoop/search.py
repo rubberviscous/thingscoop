@@ -120,25 +120,11 @@ def label_videos(filenames, classifier, sample_rate=1, recreate_index=False):
 
 def search_labels(timed_labels, query, classifier, sample_rate=1, recreate_index=False, min_confidence=0.3):
     timed_labels = threshold_labels(timed_labels, min_confidence)
-
-    #print timed_labels
-    ret = []
-    for t, labels in timed_labels:
-        success = eval_query_with_labels(query, labels)
-                
-        if not inside_range and success:
-            range_start = t
-            range_end = t
-            inside_range = True
-                
-        elif inside_range and not success:
-            range_end = t
-            inside_range = False
-            ret.append((range_start, range_end))
-    
-    if inside_range:
-        ret.append((range_start, range_end))
-
+    times = []
+    for t, labels_list in timed_labels:
+        raw_labels = map(lambda (l, c): l, labels_list)
+        if eval_query_with_labels(query, raw_labels):
+            times.append(t)
     return times_to_regions(times)
 
 def search_videos(labels_by_filename, query, classifier, sample_rate=1, recreate_index=False, min_confidence=0.3):
