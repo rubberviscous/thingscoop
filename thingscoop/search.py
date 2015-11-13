@@ -89,7 +89,7 @@ def label_video(filename, classifier, sample_rate=1, recreate_index=False):
 
     for index, frame in enumerate(frames):
         pbar.update(index)
-        labels = classifier.classify_image(frame)
+        labels = classifier.classify_image_dd(frame)
         if not len(labels):
             continue
         t = float((1./sample_rate) * index)

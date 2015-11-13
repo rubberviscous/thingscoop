@@ -6,7 +6,7 @@ Usage:
   thingscoop filter <query> <files>... [-o <output_path>] [-m <model>] [-s <sr>] [-c <mc>] [--recreate-index] [--gpu-mode] [--open]
   thingscoop search <query> <files>... [-o <output_path>] [-m <model>] [-s <sr>] [-c <mc>] [--recreate-index] [--gpu-mode] 
   thingscoop describe <file> [-n <words>] [-m <model>] [--recreate-index] [--gpu-mode] [-c <mc>]
-  thingscoop index <files> [-m <model>] [-s <sr>] [-c <mc>] [-r <ocr>] [--recreate-index] [--gpu-mode] 
+  thingscoop index <files> [-m <model>] [-d <dir>] [-s <sr>] [-c <mc>] [-r <ocr>] [--recreate-index] [--gpu-mode] 
   thingscoop sort <file> [-m <model>] [--gpu-mode] [--min-confidence <ct>] [--max-section-length <ms>] [-i <ignore>] [--open]
   thingscoop preview <file> [-m <model>] [-d <dir>] [--gpu-mode] [--min-confidence <ct>]
   thingscoop labels list [-m <model>]
