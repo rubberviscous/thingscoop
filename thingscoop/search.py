@@ -57,7 +57,12 @@ def reverse_index(timed_labels, min_occurrences=2, max_length_per_label=8):
 
 def threshold_labels(timed_labels, min_confidence):
     ret = []
+    #print 'timed_labels=',timed_labels
     for t, label_list in timed_labels:
+        #strlabels = []
+        #for l in label_list:
+        #    strlabels.append(l[0])
+        #print label_list
         filtered = filter(lambda (l, c): c > min_confidence, label_list)
         if filtered:
             ret.append((t, filtered))
@@ -65,6 +70,7 @@ def threshold_labels(timed_labels, min_confidence):
 
 def filter_out_labels(timed_labels, ignore_list):
     ret = []
+    print 'timed_labels=',timed_labels
     for t, label_list in timed_labels:
         filtered = filter(lambda (l, c): l not in ignore_list, label_list)
         if filtered:
