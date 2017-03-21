@@ -48,6 +48,10 @@ if __name__ == '__main__':
     #    sys.exit(1)
     sys.path.append(os.path.join('python','/home/beniz/projects/deepdetect/apps/thingscoop'))
     os.environ['GLOG_minloglevel'] = '3'
+    import os,sys,inspect
+    currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    parentdir = os.path.dirname(currentdir)
+    sys.path.insert(0,parentdir)
     import thingscoop
     args = docopt(__doc__, version="Thingscoop 0.1")
     sys.exit(thingscoop.main(args))
